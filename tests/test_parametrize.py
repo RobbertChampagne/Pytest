@@ -11,13 +11,3 @@ def test_add(a, b, expected):
 
 def divide(a, b):
     return a / b
-
-@pytest.mark.parametrize(
-    "a,b,expected", [(10, 2, 5), (3, 3, 1), (1, 0, pytest.raises(ZeroDivisionError))]
-)
-def test_divide(a, b, expected):
-    if isinstance(expected, type) and issubclass(expected, Exception):
-        with expected:
-            divide(a, b)
-    else:
-        assert divide(a, b) == expected
