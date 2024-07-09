@@ -1,4 +1,6 @@
-from unittest.mock import Mock
+# pytest tests/test_mocking.py
+
+from unittest.mock import Mock, create_autospec
 import pytest
 
 # Mocking a function
@@ -18,7 +20,7 @@ class Database:
 
 
 # Mocking a method of an object
-def test_save_data():
+def test_save_data_method():
     db = Database()
     db.save_data = Mock()
     db.save_data("test data")
@@ -28,9 +30,9 @@ def test_save_data():
 
 
 # Mocking a whole class
-def test_save_data():
+def test_save_data_class():
     # create_autospec function is used to create a mock that has the same methods as the original Database class.
-    Database = create_autospec(Database)
-    db = Database()
+    MockDatabase = create_autospec(Database)
+    db = MockDatabase()
     db.save_data("test data")
     db.save_data.assert_called_once_with("test data")

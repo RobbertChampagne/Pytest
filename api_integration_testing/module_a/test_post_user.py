@@ -3,24 +3,28 @@
 import requests
 import pytest
 from jsonschema import validate
-
-BASE_URL = 'https://reqres.in/api/users'
+from core.apis_info import ApiAbbreviation, apiUrls
 
 user_schema = {
     "type": "object",
     "properties": {
+        "name": {"type": "string"},
+        "email": {"type": "string"},
         "id": {"type": "string"},
         "createdAt": {"type": "string", "format": "date-time"},
     },
-    "required": ["id", "createdAt"],
+    "required": ["name", "email", "id", "createdAt"],
 }
 
 def test_post_user():
-    response = requests.post(BASE_URL)
+    url = apiUrls[ApiAbbreviation.Reqres] + "/users"
+    data = {"name": "John Doe", "email": "john.doe@example.com"}
+    response = requests.post(url, json=data)
     assert response.status_code == 201
-
     user = response.json()
-    print(user)
+    assert user["name"] == "John Doe"
+    assert user["email"] == "john.doe@example.com"
+    
     # In JavaScript, this kind of data structure is called an "object", and in Python, it's called a "dictionary".
     assert isinstance(user, dict)
 

@@ -1,4 +1,4 @@
-# pytest -s api_integration_testing/module_a/test_get_users.py
+# pytest -s api_integration_testing/module_a/test_get_user.py
 
 import requests
 import pytest
@@ -17,14 +17,12 @@ user_schema = {
     "required": ["id", "first_name", "email", "last_name", "avatar"],
 }
 
-def test_get_users():
-    url = apiUrls[ApiAbbreviation.Reqres] + "/users?page=2"
+def test_get_user():
+    url = apiUrls[ApiAbbreviation.Reqres] + "/users/8"
     response = requests.get(url)
     assert response.status_code == 200
 
-    users = response.json()['data']
-    assert isinstance(users, list)
+    user = response.json()["data"]
+    assert isinstance(user, dict)
 
-    # Check that each user has the required fields
-    for user in users:
-        validate(instance=user, schema=user_schema)
+    validate(instance=user, schema=user_schema)
