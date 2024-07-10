@@ -17,6 +17,7 @@ user_schema = {
     "required": ["id", "first_name", "email", "last_name", "avatar"],
 }
 
+
 def test_get_user():
     url = apiUrls[ApiAbbreviation.Reqres] + "/users/8"
     response = requests.get(url)
