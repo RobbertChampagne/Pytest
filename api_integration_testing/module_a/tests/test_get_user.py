@@ -1,9 +1,9 @@
-# pytest -s api_integration_testing/module_a/test_get_user.py
+# pytest -s api_integration_testing/module_a/tests/test_get_user.py
 
 import requests
 import pytest
 from jsonschema import validate
-from core.apis_info import ApiAbbreviation, apiUrls
+from ...core.apis_info import ApiAbbreviation, apiUrls
 
 user_schema = {
     "type": "object",
@@ -27,3 +27,5 @@ def test_get_user():
     assert isinstance(user, dict)
 
     validate(instance=user, schema=user_schema)
+    
+    print(user)
