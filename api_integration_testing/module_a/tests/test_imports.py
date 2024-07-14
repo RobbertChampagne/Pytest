@@ -1,15 +1,15 @@
 # pytest -s api_integration_testing/module_a/tests/test_imports.py
-    
+  
 import pytest
 from ...core.apis_info import ApiAbbreviation, apiUrls
 import asyncio
-from ..setup.http_calls import fetch_url
+from ..setup.get_user import get_user
 from ..setup.cognito_token import get_cognito_token
 
 @pytest.mark.asyncio
-async def test_fetch_url():
+async def test_get_user():
     url = apiUrls[ApiAbbreviation.Reqres] + "/users/8"
-    status_code, user = await fetch_url(url)
+    status_code, user = await get_user(url)
     assert status_code == 200
     print(user)
     
