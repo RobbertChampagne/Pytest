@@ -1,6 +1,6 @@
 # pytest -s api_integration_testing/module_a/tests/test_get_users.py
 
-import requests
+import httpx
 import pytest
 from jsonschema import validate
 from ...core.apis_info import ApiAbbreviation, apiUrls
@@ -17,14 +17,16 @@ user_schema = {
     "required": ["id", "first_name", "email", "last_name", "avatar"],
 }
 
-def test_get_users():
-    url = apiUrls[ApiAbbreviation.Reqres] + "/users?page=2"
-    response = requests.get(url)
-    assert response.status_code == 200
+@pytest.mark.asyncio
+async def test_get_users():
+    async with httpx.AsyncClient() as client:
+        url = apiUrls[ApiAbbreviation.Reqres] + "/users?page=2"
+        response = await client.get(url)
+        assert response.status_code == 200
 
-    users = response.json()['data']
-    assert isinstance(users, list)
+        users = response.json()['data']
+        assert isinstance(users, list)
 
-    # Check that each user has the required fields
-    for user in users:
-        validate(instance=user, schema=user_schema)
+        # Check that each user has the required fields
+        for user in users:
+            validate(instance=user, schema=user_schema)

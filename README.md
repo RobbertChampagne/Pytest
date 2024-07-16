@@ -156,3 +156,74 @@ from .my_module import my_function
 **A single dot (.)** means that the import is relative to the current package. It's used to import a module from the same directory as the current module.<br>
 **Two dots (..)** indicate that the import should go up one directory level from the current package.<br>
 **Three dots (...)** indicate that the import should go up two directory levels from the current package.<br>
+
+---
+
+### print():
+To print the console output in a more readable JSON format, you can use the json module's dumps method with the indent parameter set to format the JSON data.
+
+```Python
+import json
+
+print(json.dumps(images, indent=4))
+```
+
+---
+### HTML reports:
+For generating HTML reports in pytest, the most commonly recommended tool is pytest-html.<br> It is a plugin for pytest that generates a detailed HTML report for test sessions.<br> This report includes the summary of the test outcomes, categorization of tests (passed, failed, skipped, etc.),<br> and can also include additional information like logs, links, and screenshots if configured.
+
+```Bash
+pip install pytest-html
+```
+
+Run pytest with HTML report option: When running pytest, add the --html flag followed by the name of the report file you wish to generate.
+This command will execute your tests and generate an HTML report named report.html in your current directory.
+
+```Bash
+pytest --html=report.html
+```
+
+1. **Custom Report Title**: to set a custom title for the HTML report.
+
+```Bash
+pytest --html=report.html --html-report-title="My Test Report"
+```
+
+2. **Append to Existing Report**: If you want to append the results to an existing report rather than overwrite it.
+
+```Bash
+pytest --html=report.html --self-contained-html=False
+```
+
+3. **Include Environment Section**: To include an environment section in the report, you can create an environment.properties file with key-value pairs and use the --metadata option to add each key-value pair.
+
+```Bash
+pytest --html=report.html --metadata Browser Firefox --metadata Environment Test
+```
+
+4. **Include Links**: You can include additional links in the report using the extra pytest marker.
+
+```Bash
+@pytest.mark.extra(url="https://example.com", name="Example Link")
+def test_with_extra_link():
+    assert True
+```
+
+You can put many pytest configuration options, including those for pytest-html, into a configuration file so you don't need to enter them every time you run a script. The most commonly used configuration file for pytest is `pytest.ini`
+
+```Python
+[pytest]
+addopts =
+    --html=report.html
+    --self-contained-html
+    --metadata Browser Chrome
+    --metadata Environment Test
+```
+
+This configuration will automatically apply the specified options every time you run pytest, generating an HTML report titled "My Test Report" with the additional metadata and custom CSS specified.
+
+For options that cannot be directly included in the configuration file, like adding extra links or assets through markers or modifying the pytest metadata within a test, you'll need to handle those within your test files or through custom plugins or hooks.
+
+Remember to place the pytest.ini file at the root of your project or in a location where pytest can automatically detect it.
+
+---
