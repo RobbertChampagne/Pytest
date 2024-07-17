@@ -16,12 +16,14 @@ jobs:
       run: |
         python -m pip install --upgrade pip
         pip install pytest httpx pytest-html python-dotenv aiofiles jsonschema pytest-asyncio
-    - name: Run Module B Tests
-      run: pytest -s api_integration_testing/module_d/tests/ --html=report.html
+    - name: Run Module D Tests
+      run: pytest -s api_integration_testing/module_d/tests/ --html=report_module_d.html
     - name: Run Module C Tests
-      run: pytest -s api_integration_testing/module_c/tests/ --html=report.html
-    - name: Upload HTML report
+      run: pytest -s api_integration_testing/module_c/tests/ --html=report_module_c.html
+    - name: Upload HTML reports
       uses: actions/upload-artifact@v2
       with:
-        name: HTML-report
-        path: report.html
+        name: HTML-reports
+        path: |
+          report_module_d.html
+          report_module_c.html
