@@ -1,0 +1,27 @@
+name: Run Module Tests
+
+on:
+  workflow_dispatch:
+
+jobs:
+  test-modules:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest httpx pytest-html
+    - name: Run Module B Tests
+      run: pytest -s api_integration_testing/module_b/tests/ --html=report.html
+    - name: Run Module C Tests
+      run: pytest -s api_integration_testing/module_c/tests/ --html=report.html
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v2
+      with:
+        name: HTML-report
+        path: report.html
