@@ -4,8 +4,6 @@ import os
 from dotenv import load_dotenv
 from .setup.cognito_token import unlink_cognito_token, write_cognito_token
 
-import logging
-
 # Load environment variables from .env file
 load_dotenv()
 
@@ -31,8 +29,3 @@ def pytest_sessionstart(session):
 def pytest_sessionfinish(session, exitstatus):
     print("Session finished")
     run_async(unlink_cognito_token())
-
-
-def pytest_configure(config):
-    # Basic logging configuration
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s [%(levelname)s] %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
