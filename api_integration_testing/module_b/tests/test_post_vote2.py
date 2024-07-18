@@ -19,7 +19,7 @@ async def test_post_vote():
     data = {
         "image_id": image_id,
         "sub_id": "my-user-1234",
-        "value":1
+        "value":2
     }
     
     async with httpx.AsyncClient() as client:

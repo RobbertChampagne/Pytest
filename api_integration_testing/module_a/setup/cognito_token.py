@@ -21,7 +21,10 @@ async def write_cognito_token():
             print("Token is None. Cannot write to file.")
 
 async def unlink_cognito_token():
-    os.remove(token_file) # Delete the file
+    if os.path.exists(token_file):
+        os.remove(token_file)  # Delete the file
+    else:
+        print(f"File {token_file} does not exist.")
 
 async def generate_cognito_token():
     # Your call to get the token here

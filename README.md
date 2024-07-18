@@ -252,3 +252,111 @@ pytest -s --log-cli-level=INFO api_integration_testing/module_c/tests/test_get_u
 ```
 
 ---
+
+### Coverage report
+
+When running tests in a Python project, it's crucial to understand not just if your tests pass or fail, but also how much of your code is actually being tested.
+
+```Bash
+pip install pytest-cov
+```
+
+```Bash
+pytest tests/test_classes.py --html=report.html --cov --cov-report html
+```
+
+`--cov`: This option enables coverage reporting. It tells pytest to measure the code coverage of your tests, i.e., which parts of your source code are executed while the tests run.<br>
+`--cov-report html`: This specifies the format of the coverage report. In this case, an HTML report which provides a visual and detailed overview of the coverage analysis.
+
+---
+
+### Parallel
+
+pytest by itself does not support parallel test execution as a default feature.<br>
+To run tests in parallel, you need to use additional plugins like pytest-xdist.<br> 
+This plugin adds parallel testing capabilities to pytest,<br> 
+allowing you to significantly reduce the time it takes to run your test suite by distributing tests across multiple CPUs or even separate machines.
+
+```Bash
+pip install pytest-xdist
+```
+
+Then, you can run your tests in parallel by adding the -n option followed by the number of CPU cores you want to use.<br> 
+For example, to run tests on 4 cores, you would use:
+
+```Bash
+pytest -n 4
+```
+
+---
+
+### GIT
+
+**Sequentially:**
+
+```yml
+name: Run Module Tests
+
+on:
+  workflow_dispatch # Allow manual triggering of the workflow
+  #[push] # Trigger the workflow on push events
+
+jobs:
+  test-modules:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest httpx pytest-html python-dotenv aiofiles jsonschema pytest-asyncio
+    - name: Run Module D Tests
+      run: pytest -s api_integration_testing/module_d/tests/ --html=report_module_d.html
+    - name: Run Module C Tests
+      run: pytest -s api_integration_testing/module_c/tests/ --html=report_module_c.html
+    - name: Upload HTML reports
+      uses: actions/upload-artifact@v2
+      with:
+        name: HTML-reports
+        path: |
+          report_module_d.html
+          report_module_c.html
+```
+
+**Parallel:**
+
+```yml
+name: Run Module Tests
+
+on:
+  workflow_dispatch # Allow manual triggering of the workflow
+  #[push] # Trigger the workflow on push events
+
+jobs:
+  test-modules:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        module: [module_d, module_c]
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up Python
+      uses: actions/setup-python@v2
+      with:
+        python-version: '3.8'
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install pytest httpx pytest-html python-dotenv aiofiles jsonschema pytest-asyncio
+    - name: Run Tests
+      run: pytest -s api_integration_testing/${{ matrix.module }}/tests/ --html=report_${{ matrix.module }}.html
+    - name: Upload HTML report
+      uses: actions/upload-artifact@v2
+      with:
+        name: HTML-report-${{ matrix.module }}
+        path: report_${{ matrix.module }}.html
+```

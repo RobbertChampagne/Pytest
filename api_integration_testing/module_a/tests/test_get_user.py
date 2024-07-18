@@ -1,4 +1,5 @@
-# pytest -s api_integration_testing/module_a/tests/test_get_user.py
+# pytest -n 4 -s api_integration_testing/module_a --html=report.html
+# pytest -s api_integration_testing/module_a/tests/test_get_user.py --html=report.html
 
 import httpx
 import pytest

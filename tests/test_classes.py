@@ -1,3 +1,5 @@
+# pytest tests/test_classes.py --html=report.html --cov --cov-report html
+
 import pytest
 from source.classes import Calculator, Person
 
