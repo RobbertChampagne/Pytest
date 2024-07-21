@@ -360,3 +360,38 @@ jobs:
         name: HTML-report-${{ matrix.module }}
         path: report_${{ matrix.module }}.html
 ```
+
+---
+
+### Marks
+
+Pytest marks allow you to categorize your tests, making it easier to manage and execute subsets of your test suite based on certain criteria.
+
+`@pytest.mark.slow`:
+
+**Purpose**: This mark is used to label tests that are slow to execute. You can use this mark to exclude or specifically include slow tests during test runs, optimizing your development workflow.<br>
+**Example Usage**: Running only fast tests by excluding the slow ones with a command like `pytest -k "not slow"`.
+
+`@pytest.mark.xfail`:
+
+**Purpose**: Marks a test that is expected to fail. This is useful when a known bug is present, and the test will pass once the bug is fixed.<br>
+**Example Usage**: Allows the test suite to pass in a CI/CD pipeline despite the presence of a known failing test, without hiding the test failure.<br>
+**Attributes**: reason="This test is expected to fail due to bug #123" provides a reason for the expected failure.
+
+`@pytest.mark.skip`:
+
+**Purpose**: Skips the execution of the marked test function. This is useful for tests that are not applicable under certain conditions or if a feature is not yet implemented.<br>
+**Example Usage**: Temporarily disabling a test that relies on a feature not yet available in the development environment.<br>
+**Attributes**: reason="This test is skipped because feature #456 is not yet implemented" explains why the test is skipped.
+
+`@pytest.mark.custom_mark`:
+
+**Purpose**: Demonstrates how to create a custom mark. Custom marks can be used to categorize tests in any way that suits your project's needs.<br>
+**Example Usage**: Running a specific subset of tests tagged with a custom mark, like `pytest -m custom_mark`.<br>
+**Attributes**: reason="This is a custom mark with a message" provides additional context for the custom mark.
+
+`@pytest.mark.parametrize`:
+
+**Purpose**: Allows one to define multiple sets of arguments and expected results for a test function. Pytest will run the test function once for each set of arguments.<br>
+**Example Usage**: Testing a function with various inputs to ensure it behaves as expected in different scenarios.<br>
+**Attributes**: The parameters num, expected followed by a list of tuples, each representing a test case with an input (num) and the expected output (expected).

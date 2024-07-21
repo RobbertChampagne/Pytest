@@ -1,5 +1,6 @@
 # pytest tests/test_marks.py
 import pytest
+from source.function import is_even
 
 """
 To run only the tests marked as slow: pytest -m slow
@@ -24,4 +25,17 @@ def test_skipped():
 @pytest.mark.custom_mark(reason="This is a custom mark with a message")
 def test_custom_mark():
     # This test has a custom mark
+    print()
     pass
+
+@pytest.mark.parametrize("num, expected", [
+    (2, True),
+    (3, False),
+    (4, True),
+    (5, False),
+    (10, True),
+    (11, False),
+    (12, True),
+])
+def test_is_even(num, expected):
+    assert is_even(num) == expected
