@@ -1,4 +1,20 @@
+<img src="./assets/logo.jpeg"  width="300"/>
+
 # Pytest
+
+Welcome to the Pytest Automation Framework repository!<br>
+This project provides a structured approach to writing and running automated tests using Pytest.<br>
+It includes setup instructions, test execution commands, and configuration details to help you get started quickly.
+
+### Key Features
+- **Easy Setup**: Step-by-step instructions to install Python and necessary dependencies.
+- **Test Execution**: Commands to run your tests with options for output capturing.
+- **Global Fixtures**: Guidelines for creating reusable fixtures in `conftest.py`.
+- **Configuration Files**: Information on using `pytest.ini` for configuring Pytest.
+
+Follow the detailed steps in this README to set up and use the tools provided in this repository.
+
+---
 
 ### Setup:
 1. Install Python
@@ -6,8 +22,9 @@
 3. `pytest tests/test_my_functions.py`
 
 ---
+
 ### Running tests:
-By default, pytest captures all output to stdout and stderr. <br>
+By default, pytest captures all output to stdout and stderr.<br>
 If you want to see print statements immediately during test execution, you can disable output capturing by using the -s option:
 
 ```Bash
