@@ -110,6 +110,41 @@ such as the tests that are being run and their status.<br>
 The `exitstatus` parameter in `pytest_sessionfinish` is the exit status of the testing session, which can be used to determine if the tests passed or failed.
 
 ---
+
+### Virtual Environments:
+
+**Run the following command to create a virtual environment:**
+```Bash
+python -m venv pythonenv
+```
+
+**Activate the Virtual Environment:**
+```Bash
+pythonenv\Scripts\activate
+```
+
+**Install Packages:**
+```Bash
+pip install package_name
+```
+
+**Deactivate the Virtual Environment:**
+```Bash
+deactivate
+```
+
+**Export the installed packages to a requirements.txt file:**
+```Bash
+pip freeze > requirements.txt
+```
+
+**To list all virtual environments created using venv or other tools like virtualenv, you can use:**
+```Bash
+dir /s /b activate
+```
+
+---
+
 ### Virtual Environments in Anaconda:
 Create a New Anaconda Environment:
 ```Bash

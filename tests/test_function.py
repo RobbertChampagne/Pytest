@@ -11,13 +11,15 @@ def test_subtract():
 
 def test_divide():
     # Test for division by zero (returns true if ZeroDivisionError is raised)
-    with pytest.raises(ZeroDivisionError):
-        assert function.divide(1, 0)
-
-def test_custom_message():
     with pytest.raises(ZeroDivisionError, match='You cant divide by zero!'):
         assert function.divide(1, 0)
 
+#! Test will fail if the custom message is not raised
+def test_custom_message():
+    with pytest.raises(ZeroDivisionError, match='You cant divide by zero!'):
+        assert function.divide(1, 1)
+
+#! Test will fail
 def test_try_except():
     try:
         # Code that might raise an exception

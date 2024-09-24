@@ -24,8 +24,7 @@ def test_save_data_method():
     db = Database()
     db.save_data = Mock()
     db.save_data("test data")
-    # The assert_called_once_with method is used to check that db.save_data was called
-    # with the correct argument.
+    # The assert_called_once_with method is used to check that db.save_data was called with the correct argument.
     db.save_data.assert_called_once_with("test data")
 
 
