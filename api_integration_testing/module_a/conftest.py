@@ -20,12 +20,17 @@ def base_url(env):
 # Pytest hooks like pytest_sessionstart and pytest_sessionfinish do not support asynchronous functions directly.
 # You need to run the coroutine in the event loop manually.
 def run_async(async_func):
+    # Run the asynchronous function in the event loop
     asyncio.get_event_loop().run_until_complete(async_func)
     
 def pytest_sessionstart(session):
+    # Hook that runs at the start of the test session
     print("Session started")
+    # Run the asynchronous function to write the Cognito token
     run_async(write_cognito_token())
 
 def pytest_sessionfinish(session, exitstatus):
+    # Hook that runs at the end of the test session
     print("Session finished")
+    # Run the asynchronous function to unlink the Cognito token
     run_async(unlink_cognito_token())
